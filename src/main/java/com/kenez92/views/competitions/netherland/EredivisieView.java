@@ -10,10 +10,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "netherland/eredivisie", layout = MainLayout.class)
-@PageTitle(Input.NETHERLAND_EREDIVISIE)
+@PageTitle(Input.NETHERLAND_EREDIVISIE_NAME)
 public class EredivisieView extends CompetitionView {
     public EredivisieView(CompetitionService competitionService, CurrentMatchDayService currentMatchDayService,
                   CompetitionTableService competitionTableService) {
-        super(competitionService, currentMatchDayService, competitionTableService, Input.NETHERLAND_EREDIVISIE_NAME);
+        super(competitionService, currentMatchDayService, competitionTableService, Input.NETHERLAND_EREDIVISIE_NAME.toLowerCase());
     }
 }

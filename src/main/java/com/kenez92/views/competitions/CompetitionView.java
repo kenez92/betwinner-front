@@ -1,9 +1,7 @@
 package com.kenez92.views.competitions;
 
-import com.kenez92.domain.competitions.CompetitionSeasonDto;
-import com.kenez92.domain.competitions.CompetitionTableDto;
-import com.kenez92.domain.competitions.CompetitionTableElementDto;
-import com.kenez92.domain.competitions.CurrentMatchDayDto;
+import com.kenez92.config.Input;
+import com.kenez92.domain.competitions.*;
 import com.kenez92.service.competitions.CompetitionService;
 import com.kenez92.service.competitions.CompetitionTableService;
 import com.kenez92.service.competitions.CurrentMatchDayService;
@@ -11,6 +9,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -45,12 +44,17 @@ public class CompetitionView extends VerticalLayout {
     }
 
     private void refreshComboBoxSeason() {
-        List<CompetitionSeasonDto> seasons = competitionService.getCompetition(competitionName).getCompetitionSeasonList();
-        comboBoxSeason.setPlaceholder("Select season");
-        comboBoxSeason.setItemLabelGenerator(CompetitionSeasonDto::getYears);
-        comboBoxSeason.setItems(seasons);
-        comboBoxSeason.addValueChangeListener(
-                event -> refreshRounds(event.getValue().getId()));
+        CompetitionDto competitionDto = competitionService.getCompetition(competitionName);
+        if (competitionDto == null) {
+            Notification.show(Input.ERR_NO_DATA_EXCEPTION, 5000, Notification.Position.TOP_CENTER);
+        } else {
+            List<CompetitionSeasonDto> seasons = competitionService.getCompetition(competitionName).getCompetitionSeasonList();
+            comboBoxSeason.setPlaceholder("Select season");
+            comboBoxSeason.setItemLabelGenerator(CompetitionSeasonDto::getYears);
+            comboBoxSeason.setItems(seasons);
+            comboBoxSeason.addValueChangeListener(
+                    event -> refreshRounds(event.getValue().getId()));
+        }
     }
 
     private void refreshRounds(Long competitionSeasonId) {
@@ -89,7 +93,6 @@ public class CompetitionView extends VerticalLayout {
                     break;
             }
         }
-
         Map<Tab, Component> tabsToPages = new HashMap<>();
         tabsToPages.put(totalTab, totalDiv);
         tabsToPages.put(homeTab, homeDiv);

@@ -10,10 +10,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "spain/laliga", layout = MainLayout.class)
-@PageTitle(Input.SPAIN_LALIGA)
+@PageTitle(Input.SPAIN_LALIGA_NAME)
 public class LaLigaView extends CompetitionView {
     public LaLigaView(CompetitionService competitionService, CurrentMatchDayService currentMatchDayService,
                   CompetitionTableService competitionTableService) {
-        super(competitionService, currentMatchDayService, competitionTableService, Input.SPAIN_LALIGA_NAME);
+        super(competitionService, currentMatchDayService, competitionTableService, Input.SPAIN_LALIGA_NAME.toLowerCase());
     }
 }

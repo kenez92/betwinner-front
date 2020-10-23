@@ -4,6 +4,7 @@ import com.kenez92.domain.competitions.CompetitionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
@@ -14,12 +15,13 @@ public class CompetitionService {
     private String rootUrl;
 
     public CompetitionDto getCompetition(String name) {
-        CompetitionDto response = restTemplate.getForObject(rootUrl + "/v1/competitions/name/" +
-                name, CompetitionDto.class);
-        if (response == null) {
-            return new CompetitionDto();
-        } else {
-            return response;
+        CompetitionDto response = null;
+        try {
+            response = restTemplate.getForObject(rootUrl + "/v1/competitions/name/" +
+                    name, CompetitionDto.class);
+        } catch (HttpClientErrorException.BadRequest e) {
+            System.out.println("Exception" + e);
         }
+        return response;
     }
 }

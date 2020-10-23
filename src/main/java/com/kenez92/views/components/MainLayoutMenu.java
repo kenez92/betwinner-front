@@ -20,31 +20,30 @@ public class MainLayoutMenu extends MenuBar {
         MenuItem account = this.addItem("Account");
 
         SubMenu competitionsSubMenu = competitions.getSubMenu();
-        MenuItem germany = competitionsSubMenu.addItem("Germany");
-        MenuItem netherland = competitionsSubMenu.addItem("Netherland");
-        MenuItem spain = competitionsSubMenu.addItem("Spain");
-        MenuItem portugal = competitionsSubMenu.addItem("Portugal");
-        MenuItem england = competitionsSubMenu.addItem("England");
-        MenuItem france = competitionsSubMenu.addItem("France");
+        MenuItem germany = competitionsSubMenu.addItem(Input.GERMANY);
+        MenuItem netherland = competitionsSubMenu.addItem(Input.NETHERLAND);
+        MenuItem spain = competitionsSubMenu.addItem(Input.SPAIN);
+        MenuItem portugal = competitionsSubMenu.addItem(Input.PORTUGAL);
+        MenuItem england = competitionsSubMenu.addItem(Input.ENGLAND);
+        MenuItem france = competitionsSubMenu.addItem(Input.FRANCE);
 
         SubMenu germanySubMenu = germany.getSubMenu();
-        //MenuItem bundesliga = germanySubMenu.addItem("Bundesliga");
-        MenuItem bundesliga = germanySubMenu.addItem(new RouterLink(Input.GERMANY_BUNDESLIGA, BundesligaView.class));
+        MenuItem bundesliga = germanySubMenu.addItem(new RouterLink(Input.GERMANY_BUNDESLIGA_NAME, BundesligaView.class));
 
         SubMenu netherlandSubMenu = netherland.getSubMenu();
-        MenuItem eredivisie = netherlandSubMenu.addItem(new RouterLink(Input.NETHERLAND_EREDIVISIE, EredivisieView.class));
+        MenuItem eredivisie = netherlandSubMenu.addItem(new RouterLink(Input.NETHERLAND_EREDIVISIE_NAME, EredivisieView.class));
 
         SubMenu spainSubMenu = spain.getSubMenu();
-        MenuItem laLiga = spainSubMenu.addItem(new RouterLink(Input.SPAIN_LALIGA, LaLigaView.class));
+        MenuItem laLiga = spainSubMenu.addItem(new RouterLink(Input.SPAIN_LALIGA_NAME, LaLigaView.class));
 
         SubMenu portugalSubMenu = portugal.getSubMenu();
-        MenuItem primeiraLiga = portugalSubMenu.addItem(new RouterLink(Input.PORTUGAL_PRIMEIRA_LIGA, PrimeiraLigaView.class));
+        MenuItem primeiraLiga = portugalSubMenu.addItem(new RouterLink(Input.PORTUGAL_PRIMEIRA_LIGA_NAME, PrimeiraLigaView.class));
 
         SubMenu englandSubMenu = england.getSubMenu();
-        MenuItem premierLeague = englandSubMenu.addItem(new RouterLink(Input.ENGLAND_PREMIER_LEAGUE, PremierLeagueView.class));
+        MenuItem premierLeague = englandSubMenu.addItem(new RouterLink(Input.ENGLAND_PREMIER_LEAGUE_NAME, PremierLeagueView.class));
 
         SubMenu franceSubMenu = france.getSubMenu();
-        MenuItem ligue1 = franceSubMenu.addItem(new RouterLink(Input.FRANCE_LIGUE1, Ligue1View.class));
+        MenuItem ligue1 = franceSubMenu.addItem(new RouterLink(Input.FRANCE_LIGUE1_NAME, Ligue1View.class));
     }
 
 }
