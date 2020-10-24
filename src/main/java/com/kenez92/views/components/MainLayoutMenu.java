@@ -1,6 +1,7 @@
 package com.kenez92.views.components;
 
 import com.kenez92.config.Input;
+import com.kenez92.views.MainView;
 import com.kenez92.views.competitions.england.PremierLeagueView;
 import com.kenez92.views.competitions.france.Ligue1View;
 import com.kenez92.views.competitions.germany.BundesligaView;
@@ -16,6 +17,7 @@ public class MainLayoutMenu extends MenuBar {
     public MainLayoutMenu() {
         this.setOpenOnHover(true);
 
+        MenuItem todayMatches = this.addItem(new RouterLink("Matches", MainView.class));
         MenuItem competitions = this.addItem("Competitions");
         MenuItem account = this.addItem("Account");
 
