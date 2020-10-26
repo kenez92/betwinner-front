@@ -2,6 +2,7 @@ package com.kenez92.views.components;
 
 import com.kenez92.config.Input;
 import com.kenez92.views.MainView;
+import com.kenez92.views.account.CreateAccountView;
 import com.kenez92.views.competitions.england.PremierLeagueView;
 import com.kenez92.views.competitions.france.Ligue1View;
 import com.kenez92.views.competitions.germany.BundesligaView;
@@ -46,6 +47,9 @@ public class MainLayoutMenu extends MenuBar {
 
         SubMenu franceSubMenu = france.getSubMenu();
         MenuItem ligue1 = franceSubMenu.addItem(new RouterLink(Input.FRANCE_LIGUE1_NAME, Ligue1View.class));
+
+        SubMenu accountSubMenu = account.getSubMenu();
+        MenuItem createAccount = accountSubMenu.addItem(new RouterLink("Create account", CreateAccountView.class));
     }
 
 }
