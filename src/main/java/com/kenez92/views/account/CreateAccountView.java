@@ -8,6 +8,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -31,6 +32,11 @@ import static com.kenez92.IO.views.account.IOCreateAccountView.*;
 @Route(value = "account/create", layout = MainLayout.class)
 @PageTitle(PAGE_TITLE)
 public class CreateAccountView extends VerticalLayout {
+    private static final String FIELD_SIZE = "150px";
+    private static final String USER_START_MONEY = "100";
+    private static final String MARGIN_RIGHT = "marginRight";
+    private static final String MARGIN_RIGHT_VALUE = "10px";
+    private static final String ROLE_ACCOUNT = ROLE_USER;
     private final Binder<UserDto> binder = new Binder<>();
     private final FormLayout formLayout = new FormLayout();
     private final UserDto userDto = new UserDto();
@@ -75,10 +81,14 @@ public class CreateAccountView extends VerticalLayout {
         save.getStyle().set(MARGIN_RIGHT, MARGIN_RIGHT_VALUE);
         save.addClickListener(event -> {
             if (binder.writeBeanIfValid(userDto)) {
-                userDto.setRole(ROLE_USER);
+                userDto.setRole(ROLE_ACCOUNT);
                 userDto.setMoney(USER_START_MONEY);
-                System.out.println(userDto);
-                //temporary show in console
+                UserDto createdUserDto = accountService.createUser(userDto);
+                if (createdUserDto != null) {
+                    Notification.show(ACCOUNT_SUCCESSFUL_CREATED);
+                } else {
+                    Notification.show(ACCOUNT_NOT_CREATED);
+                }
             } else {
                 BinderValidationStatus<UserDto> validate = binder.validate();
                 String errorText = validate.getFieldValidationStatuses().stream()

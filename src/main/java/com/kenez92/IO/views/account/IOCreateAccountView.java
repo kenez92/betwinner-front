@@ -19,13 +19,12 @@ public class IOCreateAccountView {
     public static final String NORMAL_STRATEGY = "Normal";
     public static final String STRATEGY = "Strategy";
     public static final String STRATEGY_CHECK_BOX_SUBSCRIPTION = "Subscription for strategy";
-    public static final String FIELD_SIZE = "150px";
     public static final String ROLE_USER = "ROLE_USER";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String BUTTON_SAVE_NAME = "Save";
     public static final String BUTTON_RESET_NAME = "Reset";
-    public static final String USER_START_MONEY = "100";
     public static final String THERE_ARE_ERRORS = "There are errors : ";
-    public static final String MARGIN_RIGHT = "marginRight";
-    public static final String MARGIN_RIGHT_VALUE = "10px";
+    public static final String ACCOUNT_SUCCESSFUL_CREATED = "Successful created account!";
+    public static final String ACCOUNT_NOT_CREATED = "Account is not created!";
 }
 
