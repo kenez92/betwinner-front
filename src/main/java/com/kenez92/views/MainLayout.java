@@ -1,7 +1,7 @@
 package com.kenez92.views;
 
 import com.kenez92.config.Input;
-import com.kenez92.domain.MatchDto;
+import com.kenez92.domain.match.MatchDto;
 import com.kenez92.views.components.MainLayoutMenu;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;

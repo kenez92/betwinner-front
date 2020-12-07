@@ -1,6 +1,15 @@
 HELP.md
 .gradle
 build/
+webpack.config.js
+webpack.generated.js
+package-lock.json
+package.json
+/config
+/node_modules/
+/gradle/
+
+
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

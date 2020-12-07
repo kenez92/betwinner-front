@@ -153,8 +153,11 @@ public class CreateAccountView extends VerticalLayout {
 
     private ComboBox<String> createStrategyComboBox() {
         ComboBox<String> strategyComboBox = new ComboBox<>();
-        List<String> strategyList = new ArrayList(List.of(EVERYTHING_STRATEGY, DEFENSIVE_STRATEGY,
-                AGGRESSIVE_STRATEGY, NORMAL_STRATEGY));
+        List<String> strategyList = new ArrayList<>();
+        strategyList.add(EVERYTHING_STRATEGY);
+        strategyList.add(DEFENSIVE_STRATEGY);
+        strategyList.add(AGGRESSIVE_STRATEGY);
+        strategyList.add(NORMAL_STRATEGY);
         strategyComboBox.setItems(strategyList);
         strategyComboBox.setValue(strategyList.get(0));
         return strategyComboBox;

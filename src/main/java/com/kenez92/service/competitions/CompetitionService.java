@@ -1,6 +1,7 @@
 package com.kenez92.service.competitions;
 
 import com.kenez92.domain.competitions.CompetitionDto;
+import com.kenez92.domain.competitions.CompetitionSeasonDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class CompetitionService {
             response = restTemplate.getForObject(rootUrl + "/v1/competitions/name/" +
                     name, CompetitionDto.class);
         } catch (HttpClientErrorException.BadRequest e) {
-            System.out.println("Exception" + e);
+            System.out.println("Exception " + e);
         }
         return response;
     }
