@@ -1,15 +1,15 @@
 package com.kenez92.service.competitions;
 
 import com.kenez92.domain.competitions.CompetitionDto;
-import com.kenez92.domain.competitions.CompetitionSeasonDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class CompetitionService {
     private final RestTemplate restTemplate;
     @Value("${root.application.url}")
@@ -20,8 +20,8 @@ public class CompetitionService {
         try {
             response = restTemplate.getForObject(rootUrl + "/v1/competitions/name/" +
                     name, CompetitionDto.class);
-        } catch (HttpClientErrorException.BadRequest e) {
-            System.out.println("Exception " + e);
+        } catch (Exception ex) {
+            log.error("Error while fetching competitions. Exception :  " + ex);
         }
         return response;
     }

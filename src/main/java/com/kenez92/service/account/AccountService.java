@@ -1,7 +1,6 @@
 package com.kenez92.service.account;
 
 import com.kenez92.domain.account.UserDto;
-import com.kenez92.domain.competitions.CompetitionDto;
 import com.vaadin.flow.component.notification.Notification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,9 @@ public class AccountService {
             response = restTemplate.postForObject(rootUrl + "/v1/users/", userDto, UserDto.class);
         } catch (HttpClientErrorException.BadRequest e) {
             Notification.show(e.getResponseBodyAsString());
-            log.info("Exception " + e + " userDto : " + userDto);
+            log.error("Exception " + e + " userDto : " + userDto);
+        } catch (Exception ex) {
+            log.error("Exception in account service: " + ex);
         }
         return response;
     }
