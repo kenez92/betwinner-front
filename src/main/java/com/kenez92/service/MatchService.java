@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,9 +22,10 @@ public class MatchService {
     @Value("${root.application.url}")
     private String rootUrl;
 
-    public List<MatchDto> todayMatches() {
+    public List<MatchDto> getMatchesByLocalDate(final LocalDate localDate) {
         try {
-            MatchDto[] matchesResponse = restTemplate.getForObject(rootUrl + "/v1/matches/", MatchDto[].class);
+            MatchDto[] matchesResponse = restTemplate.getForObject(rootUrl + "/v1/matches/" + "date=" + localDate,
+                    MatchDto[].class);
             return Arrays.asList(ofNullable(matchesResponse).orElse(new MatchDto[0]));
         } catch (Exception ex) {
             log.error("Error while fetching matches response. Exception : " + ex);
