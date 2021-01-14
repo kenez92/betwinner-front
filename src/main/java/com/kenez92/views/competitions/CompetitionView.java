@@ -1,6 +1,6 @@
 package com.kenez92.views.competitions;
 
-import com.kenez92.config.Input;
+import com.kenez92.config.Consts;
 import com.kenez92.domain.competitions.*;
 import com.kenez92.service.competitions.CompetitionService;
 import com.kenez92.service.competitions.CompetitionTableService;
@@ -46,7 +46,7 @@ public class CompetitionView extends VerticalLayout {
     private void refreshComboBoxSeason() {
         CompetitionDto competitionDto = competitionService.getCompetition(competitionName);
         if (competitionDto == null) {
-            Notification.show(Input.ERR_NO_DATA_EXCEPTION, 5000, Notification.Position.TOP_CENTER);
+            Notification.show(Consts.ERR_NO_DATA_EXCEPTION, 5000, Notification.Position.TOP_CENTER);
         } else {
             List<CompetitionSeasonDto> seasons = competitionService.getCompetition(competitionName).getCompetitionSeasonList();
             comboBoxSeason.setPlaceholder("Select season");

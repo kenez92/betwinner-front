@@ -1,6 +1,6 @@
 package com.kenez92.views;
 
-import com.kenez92.config.Input;
+import com.kenez92.config.Consts;
 import com.kenez92.domain.match.MatchDto;
 import com.kenez92.service.MatchService;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 
 @Route(layout = MainLayout.class)
-@PageTitle(Input.PROJECT_NAME)
+@PageTitle(Consts.PROJECT_NAME)
 public class MainView extends VerticalLayout {
     private final MatchService matchService;
     private final Grid<MatchDto> grid = new Grid<>();

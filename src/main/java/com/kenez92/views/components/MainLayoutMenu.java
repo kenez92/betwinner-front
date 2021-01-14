@@ -1,8 +1,10 @@
 package com.kenez92.views.components;
 
-import com.kenez92.config.Input;
+import com.kenez92.config.Consts;
 import com.kenez92.views.MainView;
 import com.kenez92.views.account.CreateAccountView;
+import com.kenez92.views.account.LoginView;
+import com.kenez92.views.account.MyAccountView;
 import com.kenez92.views.competitions.england.PremierLeagueView;
 import com.kenez92.views.competitions.france.Ligue1View;
 import com.kenez92.views.competitions.germany.BundesligaView;
@@ -23,33 +25,35 @@ public class MainLayoutMenu extends MenuBar {
         MenuItem account = this.addItem("Account");
 
         SubMenu competitionsSubMenu = competitions.getSubMenu();
-        MenuItem germany = competitionsSubMenu.addItem(Input.GERMANY);
-        MenuItem netherland = competitionsSubMenu.addItem(Input.NETHERLAND);
-        MenuItem spain = competitionsSubMenu.addItem(Input.SPAIN);
-        MenuItem portugal = competitionsSubMenu.addItem(Input.PORTUGAL);
-        MenuItem england = competitionsSubMenu.addItem(Input.ENGLAND);
-        MenuItem france = competitionsSubMenu.addItem(Input.FRANCE);
+        MenuItem germany = competitionsSubMenu.addItem(Consts.GERMANY);
+        MenuItem netherland = competitionsSubMenu.addItem(Consts.NETHERLAND);
+        MenuItem spain = competitionsSubMenu.addItem(Consts.SPAIN);
+        MenuItem portugal = competitionsSubMenu.addItem(Consts.PORTUGAL);
+        MenuItem england = competitionsSubMenu.addItem(Consts.ENGLAND);
+        MenuItem france = competitionsSubMenu.addItem(Consts.FRANCE);
 
         SubMenu germanySubMenu = germany.getSubMenu();
-        MenuItem bundesliga = germanySubMenu.addItem(new RouterLink(Input.GERMANY_BUNDESLIGA_NAME, BundesligaView.class));
+        MenuItem bundesliga = germanySubMenu.addItem(new RouterLink(Consts.GERMANY_BUNDESLIGA_NAME, BundesligaView.class));
 
         SubMenu netherlandSubMenu = netherland.getSubMenu();
-        MenuItem eredivisie = netherlandSubMenu.addItem(new RouterLink(Input.NETHERLAND_EREDIVISIE_NAME, EredivisieView.class));
+        MenuItem eredivisie = netherlandSubMenu.addItem(new RouterLink(Consts.NETHERLAND_EREDIVISIE_NAME, EredivisieView.class));
 
         SubMenu spainSubMenu = spain.getSubMenu();
-        MenuItem laLiga = spainSubMenu.addItem(new RouterLink(Input.SPAIN_LALIGA_NAME, LaLigaView.class));
+        MenuItem laLiga = spainSubMenu.addItem(new RouterLink(Consts.SPAIN_LALIGA_NAME, LaLigaView.class));
 
         SubMenu portugalSubMenu = portugal.getSubMenu();
-        MenuItem primeiraLiga = portugalSubMenu.addItem(new RouterLink(Input.PORTUGAL_PRIMEIRA_LIGA_NAME, PrimeiraLigaView.class));
+        MenuItem primeiraLiga = portugalSubMenu.addItem(new RouterLink(Consts.PORTUGAL_PRIMEIRA_LIGA_NAME, PrimeiraLigaView.class));
 
         SubMenu englandSubMenu = england.getSubMenu();
-        MenuItem premierLeague = englandSubMenu.addItem(new RouterLink(Input.ENGLAND_PREMIER_LEAGUE_NAME, PremierLeagueView.class));
+        MenuItem premierLeague = englandSubMenu.addItem(new RouterLink(Consts.ENGLAND_PREMIER_LEAGUE_NAME, PremierLeagueView.class));
 
         SubMenu franceSubMenu = france.getSubMenu();
-        MenuItem ligue1 = franceSubMenu.addItem(new RouterLink(Input.FRANCE_LIGUE1_NAME, Ligue1View.class));
+        MenuItem ligue1 = franceSubMenu.addItem(new RouterLink(Consts.FRANCE_LIGUE1_NAME, Ligue1View.class));
 
         SubMenu accountSubMenu = account.getSubMenu();
-        MenuItem createAccount = accountSubMenu.addItem(new RouterLink("Create account", CreateAccountView.class));
+        MenuItem createAccount = accountSubMenu.addItem(new RouterLink(Consts.CREATE_ACCOUNT, CreateAccountView.class));
+        MenuItem login = accountSubMenu.addItem(new RouterLink(Consts.LOGIN, LoginView.class));
+        MenuItem myAccount = accountSubMenu.addItem(new RouterLink(Consts.MY_ACCOUNT, MyAccountView.class));
     }
 
 }

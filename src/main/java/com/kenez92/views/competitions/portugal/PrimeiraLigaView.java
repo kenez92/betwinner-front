@@ -1,6 +1,6 @@
 package com.kenez92.views.competitions.portugal;
 
-import com.kenez92.config.Input;
+import com.kenez92.config.Consts;
 import com.kenez92.service.competitions.CompetitionService;
 import com.kenez92.service.competitions.CompetitionTableService;
 import com.kenez92.service.competitions.CurrentMatchDayService;
@@ -10,10 +10,10 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "portugal/primeira_liga", layout = MainLayout.class)
-@PageTitle(Input.PORTUGAL_PRIMEIRA_LIGA_NAME)
+@PageTitle(Consts.PORTUGAL_PRIMEIRA_LIGA_NAME)
 public class PrimeiraLigaView extends CompetitionView {
     public PrimeiraLigaView(CompetitionService competitionService, CurrentMatchDayService currentMatchDayService,
                             CompetitionTableService competitionTableService) {
-        super(competitionService, currentMatchDayService, competitionTableService, Input.PORTUGAL_PRIMEIRA_LIGA_NAME.toLowerCase());
+        super(competitionService, currentMatchDayService, competitionTableService, Consts.PORTUGAL_PRIMEIRA_LIGA_NAME.toLowerCase());
     }
 }
