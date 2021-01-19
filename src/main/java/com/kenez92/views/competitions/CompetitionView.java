@@ -5,12 +5,13 @@ import com.kenez92.domain.competitions.*;
 import com.kenez92.service.competitions.CompetitionService;
 import com.kenez92.service.competitions.CompetitionTableService;
 import com.kenez92.service.competitions.CurrentMatchDayService;
+import com.kenez92.views.components.CouponComponent;
+import com.kenez92.views.components.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CompetitionView extends VerticalLayout {
+public class CompetitionView extends MainLayout {
     private final String competitionName;
     private final CompetitionService competitionService;
     private final CurrentMatchDayService currentMatchDayDtoService;
@@ -27,20 +28,22 @@ public class CompetitionView extends VerticalLayout {
     private ComboBox<CurrentMatchDayDto> comboBoxRounds = new ComboBox<>();
 
     public CompetitionView(CompetitionService competitionService, CurrentMatchDayService currentMatchDayService,
-                           CompetitionTableService competitionTableService, String competitionName) {
+                           CompetitionTableService competitionTableService, String competitionName, CouponComponent couponComponent) {
+        super(couponComponent);
         this.competitionName = competitionName;
         this.competitionService = competitionService;
         this.currentMatchDayDtoService = currentMatchDayService;
         this.competitionTableService = competitionTableService;
+        couponComponent.refreshCoupon();
         createComponents();
     }
 
     private void createComponents() {
         comboBoxSeason.setLabel("Select season");
         refreshComboBoxSeason();
-        add(comboBoxSeason);
+        this.getContent().add(comboBoxSeason);
         comboBoxRounds.setLabel("Select round");
-        add(comboBoxRounds);
+        this.getContent().add(comboBoxRounds);
     }
 
     private void refreshComboBoxSeason() {
@@ -109,7 +112,7 @@ public class CompetitionView extends VerticalLayout {
             selectedPage.setVisible(true);
         });
 
-        add(tabs, pages);
+        this.getContent().add(tabs, pages);
     }
 
     private Grid createGrid(CompetitionTableDto competitionTableDto) {

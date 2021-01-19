@@ -5,6 +5,9 @@ public class Consts {
     public static final String LOGO_SIZE = "100px";
     public static final String HEADER_SIZE = "100%";
     public static final String PROJECT_NAME = "BetWinner";
+    public static final String BACKGROUND_COLOR = "#9effa8";
+
+    public static final long TOKEN_AVAILABILITY = 3600000;
 
     public static final String GERMANY = "Germany";
     public static final String GERMANY_BUNDESLIGA_NAME = "Bundesliga";
@@ -13,7 +16,7 @@ public class Consts {
     public static final String NETHERLAND_EREDIVISIE_NAME = "Eredivisie";
 
     public static final String SPAIN = "Spain";
-    public static final String SPAIN_LALIGA_NAME = "LaLiga";
+    public static final String SPAIN_LALIGA_NAME = "Primera Division";
 
     public static final String PORTUGAL = "Portugal";
     public static final String PORTUGAL_PRIMEIRA_LIGA_NAME = "Primeira liga";
@@ -26,11 +29,10 @@ public class Consts {
 
     public static final String ERR_NO_DATA_EXCEPTION = "Sorry we dont have data about this competition!";
 
+    public static final String CREATE_ACCOUNT_PAGE_TITLE = "Create account";
     public static final String CREATE_ACCOUNT = "Create account";
     public static final String LOGIN = "Login";
     public static final String MY_ACCOUNT = "My account";
-
-    public static final String CREATE_ACCOUNT_PAGE_TITLE = "Create account";
     public static final String FIRST_NAME = "First name";
     public static final String LAST_NAME = "Last name";
     public static final String PASSWORD = "Password";
@@ -60,4 +62,10 @@ public class Consts {
 
     public static final String MY_ACCOUNT_PAGE_TITLE = "My account";
     public static final String ERR_YOU_ARE_NOT_LOGGED_IN = "You are not logged in";
+
+    public static final String MY_COUPONS_PAGE_TITLE = "My coupons";
+    public static final String MY_COUPONS = "My coupons";
+
+    public static final String MY_COUPON_PAGE_TITLE = "My coupon";
+    public static final String MY_COUPON = "My coupon";
 }

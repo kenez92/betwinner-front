@@ -3,7 +3,8 @@ package com.kenez92.views.account;
 import com.kenez92.config.Consts;
 import com.kenez92.domain.account.UserDto;
 import com.kenez92.service.account.AccountService;
-import com.kenez92.views.MainLayout;
+import com.kenez92.views.components.CouponComponent;
+import com.kenez92.views.components.MainLayout;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -11,7 +12,6 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -28,9 +28,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Route(value = "account/create", layout = MainLayout.class)
+@Route(value = "account/create")
 @PageTitle(Consts.CREATE_ACCOUNT_PAGE_TITLE)
-public class CreateAccountView extends VerticalLayout {
+public class CreateAccountView extends MainLayout {
     private static final String FIELD_SIZE = "150px";
     private static final String USER_START_MONEY = "100";
     private static final String MARGIN_RIGHT = "marginRight";
@@ -41,8 +41,10 @@ public class CreateAccountView extends VerticalLayout {
     private final UserDto userDto = new UserDto();
     private final AccountService accountService;
 
-    public CreateAccountView(AccountService accountService) {
+    public CreateAccountView(AccountService accountService, CouponComponent couponComponent) {
+        super(couponComponent);
         this.accountService = accountService;
+        couponComponent.refreshCoupon();
         createForm();
     }
 
@@ -104,7 +106,7 @@ public class CreateAccountView extends VerticalLayout {
             strategyComboBox.setValue(Consts.EVERYTHING_STRATEGY);
         });
 
-        add(formLayout, buttons, infoLabel);
+        this.getContent().add(formLayout, buttons, infoLabel);
     }
 
     private void textFieldBindig(TextField textField) {

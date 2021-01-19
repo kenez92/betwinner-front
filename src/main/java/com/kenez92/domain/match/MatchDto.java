@@ -10,6 +10,7 @@ import java.util.Date;
 
 @Data
 public class MatchDto {
+    private Long id;
     private String homeTeam;
     private String awayTeam;
     private Date date;

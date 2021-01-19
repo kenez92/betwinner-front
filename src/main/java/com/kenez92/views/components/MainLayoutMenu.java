@@ -11,6 +11,8 @@ import com.kenez92.views.competitions.germany.BundesligaView;
 import com.kenez92.views.competitions.netherland.EredivisieView;
 import com.kenez92.views.competitions.portugal.PrimeiraLigaView;
 import com.kenez92.views.competitions.spain.LaLigaView;
+import com.kenez92.views.coupons.MyCouponView;
+import com.kenez92.views.coupons.MyCouponsView;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.menubar.MenuBar;
@@ -19,10 +21,16 @@ import com.vaadin.flow.router.RouterLink;
 public class MainLayoutMenu extends MenuBar {
     public MainLayoutMenu() {
         this.setOpenOnHover(true);
+        this.getStyle().set("height", "6vh");
+        this.getStyle().set("width", "65vw");
+        this.getStyle().set("margin-left", "35vw");
+        this.getStyle().set("position", "absolute");
+        this.getStyle().set("overflow", "auto");
 
         MenuItem todayMatches = this.addItem(new RouterLink("Matches", MainView.class));
         MenuItem competitions = this.addItem("Competitions");
         MenuItem account = this.addItem("Account");
+        MenuItem coupons = this.addItem("Coupons");
 
         SubMenu competitionsSubMenu = competitions.getSubMenu();
         MenuItem germany = competitionsSubMenu.addItem(Consts.GERMANY);
@@ -54,6 +62,11 @@ public class MainLayoutMenu extends MenuBar {
         MenuItem createAccount = accountSubMenu.addItem(new RouterLink(Consts.CREATE_ACCOUNT, CreateAccountView.class));
         MenuItem login = accountSubMenu.addItem(new RouterLink(Consts.LOGIN, LoginView.class));
         MenuItem myAccount = accountSubMenu.addItem(new RouterLink(Consts.MY_ACCOUNT, MyAccountView.class));
+
+        SubMenu couponsSubMenu = coupons.getSubMenu();
+        MenuItem myCoupons = couponsSubMenu.addItem(new RouterLink(Consts.MY_COUPONS, MyCouponsView.class));
+        MenuItem myCoupon = couponsSubMenu.addItem(new RouterLink(Consts.MY_COUPON, MyCouponView.class));
+//        MenuItem myAccount = accountSubMenu.addItem(new RouterLink(Consts.MY_ACCOUNT, MyAccountView.class));
     }
 
 }

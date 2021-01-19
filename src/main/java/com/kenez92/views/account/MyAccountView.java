@@ -1,25 +1,24 @@
 package com.kenez92.views.account;
 
 import com.kenez92.config.Consts;
-import com.kenez92.config.LoggedUserComponent;
-import com.kenez92.views.MainLayout;
+import com.kenez92.views.components.CouponComponent;
+import com.kenez92.views.components.LoggedUserComponent;
+import com.kenez92.views.components.MainLayout;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "account/myAccount", layout = MainLayout.class)
+@Route(value = "account/myAccount")
 @PageTitle(Consts.MY_ACCOUNT_PAGE_TITLE)
-public class MyAccountView extends VerticalLayout {
+public class MyAccountView extends MainLayout {
     private final LoggedUserComponent loggedUserComponent;
 
-    public MyAccountView(LoggedUserComponent loggedUserComponent) {
+    public MyAccountView(LoggedUserComponent loggedUserComponent, CouponComponent couponComponent) {
+        super(couponComponent);
         this.loggedUserComponent = loggedUserComponent;
+        refreshCoupon();
         if (loggedUserComponent.isUserLoggedIn()) {
             createContent();
-        } else {
-            Notification.show(Consts.ERR_YOU_ARE_NOT_LOGGED_IN);
         }
     }
 
@@ -30,6 +29,6 @@ public class MyAccountView extends VerticalLayout {
         Label login = new Label("Username: " + loggedUserComponent.getUserDto().getLogin());
         Label money = new Label("money: " + loggedUserComponent.getUserDto().getMoney());
         Label strategy = new Label("strategy: " + loggedUserComponent.getUserDto().getUserStrategy());
-        add(firstName, lastName, email, login, money, strategy);
+        this.getContent().add(firstName, lastName, email, login, money, strategy);
     }
 }

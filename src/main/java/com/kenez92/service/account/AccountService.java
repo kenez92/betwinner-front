@@ -1,9 +1,10 @@
 package com.kenez92.service.account;
 
 import com.kenez92.config.Consts;
-import com.kenez92.config.LoggedUserComponent;
 import com.kenez92.domain.account.LoginCredentials;
 import com.kenez92.domain.account.UserDto;
+import com.kenez92.views.components.CouponComponent;
+import com.kenez92.views.components.LoggedUserComponent;
 import com.vaadin.flow.component.notification.Notification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 public class AccountService {
     private final RestTemplate restTemplate;
     private final LoggedUserComponent loggedUserComponent;
+    private final CouponComponent couponComponent;
     @Value("${root.application.url}")
     private String rootUrl;
     private final static String TOKEN_PREFIX = "Bearer ";
@@ -45,7 +47,8 @@ public class AccountService {
         String token = httpEntity.getHeaders().getFirst("Authorization");
         loggedUserComponent.setToken(token);
         loggedUserComponent.setUserDto(getUserDtoByToken(token));
-        Notification.show(Consts.INF_LOGGED_IN);
+        couponComponent.refreshCoupon();
+        Notification.show(Consts.INF_LOGGED_IN, 5000, Notification.Position.MIDDLE);
     }
 
     private UserDto getUserDtoByToken(String token) {

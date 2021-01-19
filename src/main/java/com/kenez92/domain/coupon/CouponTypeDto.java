@@ -1,0 +1,21 @@
+package com.kenez92.domain.coupon;
+
+import com.kenez92.common.enums.CouponStatus;
+import com.kenez92.common.enums.MatchType;
+import com.kenez92.domain.match.MatchDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class CouponTypeDto {
+    private Long id;
+    private MatchType matchType;
+    private MatchDto match;
+    private CouponStatus status;
+    private CouponDto coupon;
+}
