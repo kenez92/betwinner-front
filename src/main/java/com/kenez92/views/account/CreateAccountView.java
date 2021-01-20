@@ -3,6 +3,7 @@ package com.kenez92.views.account;
 import com.kenez92.config.Consts;
 import com.kenez92.domain.account.UserDto;
 import com.kenez92.service.account.AccountService;
+import com.kenez92.service.coupon.CouponService;
 import com.kenez92.views.components.CouponComponent;
 import com.kenez92.views.components.MainLayout;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -41,8 +42,8 @@ public class CreateAccountView extends MainLayout {
     private final UserDto userDto = new UserDto();
     private final AccountService accountService;
 
-    public CreateAccountView(AccountService accountService, CouponComponent couponComponent) {
-        super(couponComponent);
+    public CreateAccountView(AccountService accountService, CouponComponent couponComponent, CouponService couponService) {
+        super(couponComponent, couponService);
         this.accountService = accountService;
         couponComponent.refreshCoupon();
         createForm();

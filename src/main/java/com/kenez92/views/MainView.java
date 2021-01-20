@@ -24,14 +24,12 @@ public class MainView extends MainLayout {
     private final MatchService matchService;
     private final Grid<MatchDto> grid = new Grid<>();
     private final DatePicker datePicker = new DatePicker();
-    private final CouponService couponService;
     private final LoggedUserComponent loggedUserComponent;
 
     public MainView(MatchService matchService, CouponService couponService, LoggedUserComponent loggedUserComponent,
                     CouponComponent couponComponent) {
-        super(couponComponent);
+        super(couponComponent, couponService);
         this.matchService = matchService;
-        this.couponService = couponService;
         this.loggedUserComponent = loggedUserComponent;
         this.getCouponComponent().refreshCoupon();
         this.getContent().add(datePicker);
@@ -52,9 +50,8 @@ public class MainView extends MainLayout {
         grid.addColumn(matchDto -> matchDto.getMatchStats().getAwayTeamChance()).setHeader("Away team chance").setAutoWidth(true);
 
         grid.addComponentColumn(matchDto -> new Button(matchDto.getMatchStats().getHomeTeamCourse().toString(), event -> {
-            if (loggedUserComponent.isUserLoggedIn() && this.getCouponComponent().getCouponDto() != null
-                    && this.getCouponComponent().getCouponDto() != null) {
-                couponService.addType(this.getCouponComponent().getCouponDto().getId(), matchDto.getId(), MatchType.HOME_TEAM, loggedUserComponent.getToken());
+            if (loggedUserComponent.isUserLoggedIn() && this.getCouponComponent().getCouponDto() != null) {
+                getCouponService().addType(this.getCouponComponent().getCouponDto().getId(), matchDto.getId(), MatchType.HOME_TEAM);
                 refreshCoupon();
             } else {
                 Notification.show("Log in first");
@@ -62,9 +59,8 @@ public class MainView extends MainLayout {
         })).setAutoWidth(true).setHeader("1");
 
         grid.addComponentColumn(matchDto -> new Button(matchDto.getMatchStats().getDrawCourse().toString(), event -> {
-            if (loggedUserComponent.isUserLoggedIn() && this.getCouponComponent().getCouponDto() != null
-                    && this.getCouponComponent().getCouponDto() != null) {
-                couponService.addType(this.getCouponComponent().getCouponDto().getId(), matchDto.getId(), MatchType.DRAW, loggedUserComponent.getToken());
+            if (loggedUserComponent.isUserLoggedIn() && this.getCouponComponent().getCouponDto() != null) {
+                getCouponService().addType(this.getCouponComponent().getCouponDto().getId(), matchDto.getId(), MatchType.DRAW);
                 refreshCoupon();
             } else {
                 Notification.show("Log in first");
@@ -72,9 +68,8 @@ public class MainView extends MainLayout {
         })).setAutoWidth(true).setHeader("0");
 
         grid.addComponentColumn(matchDto -> new Button(matchDto.getMatchStats().getAwayTeamCourse().toString(), event -> {
-            if (loggedUserComponent.isUserLoggedIn() && this.getCouponComponent().getCouponDto() != null
-                    && this.getCouponComponent().getCouponDto() != null) {
-                couponService.addType(this.getCouponComponent().getCouponDto().getId(), matchDto.getId(), MatchType.AWAY_TEAM, loggedUserComponent.getToken());
+            if (loggedUserComponent.isUserLoggedIn() && this.getCouponComponent().getCouponDto() != null) {
+                getCouponService().addType(this.getCouponComponent().getCouponDto().getId(), matchDto.getId(), MatchType.AWAY_TEAM);
                 refreshCoupon();
             } else {
                 Notification.show("Log in first");

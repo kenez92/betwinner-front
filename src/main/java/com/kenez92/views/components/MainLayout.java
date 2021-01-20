@@ -1,23 +1,31 @@
 package com.kenez92.views.components;
 
 import com.kenez92.config.Consts;
+import com.kenez92.domain.coupon.CouponDto;
 import com.kenez92.domain.coupon.CouponTypeDto;
+import com.kenez92.service.coupon.CouponService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 
 public class MainLayout extends HorizontalLayout {
-    private VerticalLayout coupon = new VerticalLayout();
-    private final VerticalLayout content = new VerticalLayout();
     private final CouponComponent couponComponent;
+    private final CouponService couponService;
+    private final VerticalLayout coupon = new VerticalLayout();
+    private final VerticalLayout content = new VerticalLayout();
+    private final Grid<CouponTypeDto> couponContent = new Grid<>();
+    private final Button submitCouponButton = new Button("Submit");
+    private final FormLayout formLayout = new FormLayout();
 
-    public MainLayout(CouponComponent couponComponent) {
+    public MainLayout(CouponComponent couponComponent, CouponService couponService) {
         this.couponComponent = couponComponent;
+        this.couponService = couponService;
         H1 logo = new H1(Consts.PROJECT_NAME);
         logo.getStyle().set("margin-top", "0");
         logo.getStyle().set("margin-left", "10vw");
@@ -29,7 +37,7 @@ public class MainLayout extends HorizontalLayout {
         this.getStyle().set("width", "100vw");
         this.getStyle().set("box-sizing", "border-box");
         add(new MainLayoutMenu());
-        refreshCoupon();
+        createCoupon();
         createContent();
     }
 
@@ -45,9 +53,11 @@ public class MainLayout extends HorizontalLayout {
         return couponComponent;
     }
 
-    public void refreshCoupon() {
-        this.couponComponent.refreshCoupon();
-        coupon.removeAll();
+    public CouponService getCouponService() {
+        return couponService;
+    }
+
+    public void createCoupon() {
         coupon.getStyle().set("border", "3px solid black");
         coupon.getStyle().set("box-shadow", "2px 2px 10px #000");
         coupon.getStyle().set("width", "28vw");
@@ -58,37 +68,56 @@ public class MainLayout extends HorizontalLayout {
         coupon.getStyle().set("overflow", "auto");
         coupon.getStyle().set("position", "absolute");
 
-        Grid<CouponTypeDto> grid = new Grid<>();
-        grid.getStyle().set("background-color", Consts.BACKGROUND_COLOR);
-        grid.getStyle().set("box-shadow", "2px 2px 5px #000");
-        grid.getStyle().set("overflow", "auto");
+        couponContent.getStyle().set("background-color", Consts.BACKGROUND_COLOR);
+        couponContent.getStyle().set("box-shadow", "2px 2px 5px #000");
+        couponContent.getStyle().set("overflow", "auto");
+
+        formLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("25em", 2));
+        TextField rateField = new TextField();
+        Button changeRate = new Button("Set rate");
+        changeRate.addClickListener(e -> {
+            Double value = null;
+            try {
+                value = Double.valueOf(rateField.getValue());
+            } catch (Exception ex) {
+                Notification.show("Rate must be a namber value !");
+            }
+            if (value != null && value > 1 && couponComponent != null && couponComponent.getCouponDto() != null) {
+                CouponDto couponDto = couponService.setRateOfCoupon(couponComponent.getCouponDto().getId(), value);
+                if (couponDto != null) {
+                    couponComponent.setCouponDto(couponDto);
+                    refreshCoupon();
+                }
+            }
+        });
+        formLayout.add(rateField);
+        formLayout.add(changeRate);
+
+        refreshCoupon();
+    }
+
+    public void refreshCoupon() {
+        this.couponComponent.refreshCoupon();
+        coupon.removeAll();
 
         Label course = new Label("Course: ");
         Label rate = new Label("Rate: ");
         Label toWin = new Label("To win: ");
 
-        FormLayout formLayout = new FormLayout();
-        formLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("25em", 2));
-        TextField rateField = new TextField();
-        Button changeRate = new Button("Set rate");
-        formLayout.add(rateField);
-        formLayout.add(changeRate);
-
-        Button submit = new Button("Submit");
-        coupon.add(grid);
+        coupon.add(couponContent);
         coupon.add(course);
         coupon.add(rate);
         coupon.add(toWin);
         coupon.add(formLayout);
-        coupon.add(submit);
+        coupon.add(submitCouponButton);
         String rateResult;
         String courseResult;
         String toWinResult;
-        if (couponComponent.getCouponDto() != null) {
-            grid.setItems(this.couponComponent.getCouponDto().getCouponTypeList());
-            grid.addColumn(e -> e.getMatch().getHomeTeam() + " : " + e.getMatch().getAwayTeam()).setHeader("Match").setAutoWidth(true);
-            grid.addColumn(e -> e.getMatchType().getType()).setHeader("Type").setAutoWidth(true);
-            grid.addColumn(e -> e.getMatchType().getType().equals("1") ? e.getMatch().getMatchStats().getHomeTeamCourse()
+        if (couponComponent.getCouponDto() != null && couponComponent.getCouponDto().getCouponTypeList() != null) {
+            couponContent.setItems(this.couponComponent.getCouponDto().getCouponTypeList());
+            couponContent.addColumn(e -> e.getMatch().getHomeTeam() + " : " + e.getMatch().getAwayTeam()).setHeader("Match").setAutoWidth(true);
+            couponContent.addColumn(e -> e.getMatchType().getType()).setHeader("Type").setAutoWidth(true);
+            couponContent.addColumn(e -> e.getMatchType().getType().equals("1") ? e.getMatch().getMatchStats().getHomeTeamCourse()
                     : (e.getMatchType().getType().equals("2") ? e.getMatch().getMatchStats().getAwayTeamCourse()
                     : e.getMatch().getMatchStats().getDrawCourse()));
             rateResult = couponComponent.getCouponDto().getRate() != null ? String.valueOf(couponComponent
@@ -105,9 +134,7 @@ public class MainLayout extends HorizontalLayout {
         rate.add(rateResult);
         course.add(courseResult);
         toWin.add(toWinResult);
-
         add(coupon);
-
     }
 
     private void createContent() {

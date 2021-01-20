@@ -15,19 +15,12 @@ import java.util.List;
 @Route(value = "coupons/myCoupon")
 @PageTitle(Consts.MY_COUPON_PAGE_TITLE)
 public class MyCouponView extends MainLayout implements HasUrlParameter<Long> {
+    private final ComboBox<CouponDto> couponDtoComboBox = new ComboBox<>();
     private Long couponId;
 
-    private final LoggedUserComponent loggedUserComponent;
-    private final CouponService couponService;
-    private final ComboBox<CouponDto> couponDtoComboBox = new ComboBox<>();
-
-    public MyCouponView(LoggedUserComponent loggedUserComponent, CouponService couponService, CouponComponent couponComponent) {
-        super(couponComponent);
-        this.loggedUserComponent = loggedUserComponent;
-        this.couponService = couponService;
-        if (loggedUserComponent.isUserLoggedIn()) {
-            createContent();
-        }
+    public MyCouponView(CouponService couponService, CouponComponent couponComponent) {
+        super(couponComponent, couponService);
+        createContent();
     }
 
     @Override
@@ -43,7 +36,7 @@ public class MyCouponView extends MainLayout implements HasUrlParameter<Long> {
     }
 
     private void createCouponIdsComboBox() {
-        List<CouponDto> couponDtoList = couponService.getUserCoupons(loggedUserComponent.getToken());
+        List<CouponDto> couponDtoList = getCouponService().getUserCoupons();
         if (couponId != null) {
             couponDtoComboBox.setPlaceholder(couponId.toString());
         } else {
@@ -56,7 +49,7 @@ public class MyCouponView extends MainLayout implements HasUrlParameter<Long> {
     }
 
     private void createCouponDtoGrid(CouponDto couponDto) {
-        CouponDto dbCouponDto = couponService.getCouponById(couponDto.getId(), loggedUserComponent.getToken());
+        CouponDto dbCouponDto = getCouponService().getCouponById(couponDto.getId());
         Grid<CouponDto> grid = new Grid<>();
 
 

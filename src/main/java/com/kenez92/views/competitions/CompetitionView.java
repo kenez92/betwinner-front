@@ -5,6 +5,7 @@ import com.kenez92.domain.competitions.*;
 import com.kenez92.service.competitions.CompetitionService;
 import com.kenez92.service.competitions.CompetitionTableService;
 import com.kenez92.service.competitions.CurrentMatchDayService;
+import com.kenez92.service.coupon.CouponService;
 import com.kenez92.views.components.CouponComponent;
 import com.kenez92.views.components.MainLayout;
 import com.vaadin.flow.component.Component;
@@ -28,8 +29,9 @@ public class CompetitionView extends MainLayout {
     private ComboBox<CurrentMatchDayDto> comboBoxRounds = new ComboBox<>();
 
     public CompetitionView(CompetitionService competitionService, CurrentMatchDayService currentMatchDayService,
-                           CompetitionTableService competitionTableService, String competitionName, CouponComponent couponComponent) {
-        super(couponComponent);
+                           CompetitionTableService competitionTableService, String competitionName,
+                           CouponComponent couponComponent, CouponService couponService) {
+        super(couponComponent, couponService);
         this.competitionName = competitionName;
         this.competitionService = competitionService;
         this.currentMatchDayDtoService = currentMatchDayService;

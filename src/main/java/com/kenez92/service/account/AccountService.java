@@ -48,7 +48,7 @@ public class AccountService {
         loggedUserComponent.setToken(token);
         loggedUserComponent.setUserDto(getUserDtoByToken(token));
         couponComponent.refreshCoupon();
-        Notification.show(Consts.INF_LOGGED_IN, 5000, Notification.Position.MIDDLE);
+        Notification.show(Consts.INF_LOGGED_IN);
     }
 
     private UserDto getUserDtoByToken(String token) {

@@ -5,7 +5,6 @@ import com.kenez92.config.Consts;
 import com.kenez92.domain.coupon.CouponDto;
 import com.kenez92.service.coupon.CouponService;
 import com.kenez92.views.components.CouponComponent;
-import com.kenez92.views.components.LoggedUserComponent;
 import com.kenez92.views.components.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
@@ -24,20 +23,14 @@ import java.util.Map;
 @Route(value = "coupons/myCoupons")
 @PageTitle(Consts.MY_COUPONS_PAGE_TITLE)
 public class MyCouponsView extends MainLayout {
-    private final LoggedUserComponent loggedUserComponent;
-    private final CouponService couponService;
 
-    public MyCouponsView(LoggedUserComponent loggedUserComponent, CouponService couponService, CouponComponent couponComponent) {
-        super(couponComponent);
-        this.loggedUserComponent = loggedUserComponent;
-        this.couponService = couponService;
-        if (loggedUserComponent.isUserLoggedIn()) {
-            createContent();
-        }
+    public MyCouponsView(CouponService couponService, CouponComponent couponComponent) {
+        super(couponComponent, couponService);
+        createContent();
     }
 
     private void createContent() {
-        List<CouponDto> couponDtoList = couponService.getUserCoupons(loggedUserComponent.getToken());
+        List<CouponDto> couponDtoList = getCouponService().getUserCoupons();
 
         List<CouponDto> waitingCouponDtoList = getCouponsByStatus(CouponStatus.WAITING, couponDtoList);
         List<CouponDto> winCouponDtoList = getCouponsByStatus(CouponStatus.WIN, couponDtoList);

@@ -16,18 +16,13 @@ import org.springframework.web.context.WebApplicationContext;
 public class CouponComponent {
     private CouponDto couponDto;
     private final CouponService couponService;
-    private final LoggedUserComponent loggedUserComponent;
 
-    public CouponComponent(CouponService couponService, LoggedUserComponent loggedUserComponent) {
+    public CouponComponent(CouponService couponService) {
         this.couponService = couponService;
-        this.loggedUserComponent = loggedUserComponent;
         refreshCoupon();
     }
 
-    public CouponDto refreshCoupon() {
-        if (loggedUserComponent.isUserLoggedIn()) {
-            couponDto = couponService.createEmptyCouponOrReturnOpenedCoupon(loggedUserComponent.getToken());
-        }
-        return couponDto;
+    public void refreshCoupon() {
+        this.couponDto = couponService.createEmptyCouponOrReturnOpenedCoupon();
     }
 }

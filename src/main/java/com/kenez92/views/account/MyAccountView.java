@@ -1,6 +1,7 @@
 package com.kenez92.views.account;
 
 import com.kenez92.config.Consts;
+import com.kenez92.service.coupon.CouponService;
 import com.kenez92.views.components.CouponComponent;
 import com.kenez92.views.components.LoggedUserComponent;
 import com.kenez92.views.components.MainLayout;
@@ -13,8 +14,8 @@ import com.vaadin.flow.router.Route;
 public class MyAccountView extends MainLayout {
     private final LoggedUserComponent loggedUserComponent;
 
-    public MyAccountView(LoggedUserComponent loggedUserComponent, CouponComponent couponComponent) {
-        super(couponComponent);
+    public MyAccountView(LoggedUserComponent loggedUserComponent, CouponComponent couponComponent, CouponService couponService) {
+        super(couponComponent, couponService);
         this.loggedUserComponent = loggedUserComponent;
         refreshCoupon();
         if (loggedUserComponent.isUserLoggedIn()) {

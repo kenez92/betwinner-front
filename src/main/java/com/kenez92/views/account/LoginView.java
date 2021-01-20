@@ -3,6 +3,7 @@ package com.kenez92.views.account;
 import com.kenez92.config.Consts;
 import com.kenez92.domain.account.LoginCredentials;
 import com.kenez92.service.account.AccountService;
+import com.kenez92.service.coupon.CouponService;
 import com.kenez92.views.components.CouponComponent;
 import com.kenez92.views.components.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -17,8 +18,8 @@ import com.vaadin.flow.router.Route;
 public class LoginView extends MainLayout {
     private final AccountService accountService;
 
-    public LoginView(AccountService accountService, CouponComponent couponComponent) {
-        super(couponComponent);
+    public LoginView(AccountService accountService, CouponComponent couponComponent, CouponService couponService) {
+        super(couponComponent, couponService);
         this.accountService = accountService;
         couponComponent.refreshCoupon();
 
@@ -35,6 +36,8 @@ public class LoginView extends MainLayout {
         submitButton.addClickListener(event -> {
             if (usernameField.getValue() != null && passwordField.getValue() != null) {
                 accountService.loginUser(new LoginCredentials(usernameField.getValue(), passwordField.getValue()));
+                this.getCouponComponent().refreshCoupon();
+                refreshCoupon();
             } else {
                 Notification.show(Consts.ERR_BAD_CREDENTIALS);
             }
