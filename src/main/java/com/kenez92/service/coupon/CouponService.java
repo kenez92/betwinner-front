@@ -106,11 +106,22 @@ public class CouponService {
         return new CouponDto();
     }
 
+    public void activeCoupon(Long couponId) {
+        if (couponId != null) {
+            try {
+                HttpHeaders headers = createHeaders(loggedUserComponent.getToken());
+                HttpEntity<Void> request = new HttpEntity<>(headers);
+                HttpEntity<Void> response = restTemplate.exchange(rootUrl + "v1/coupons/" + couponId,
+                        HttpMethod.POST, request, Void.class);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     private HttpHeaders createHeaders(String token) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.AUTHORIZATION, token);
         return headers;
     }
-
-
 }

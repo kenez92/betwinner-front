@@ -90,6 +90,12 @@ public class MainLayout extends HorizontalLayout {
                 }
             }
         });
+
+        submitCouponButton.addClickListener(e -> {
+            if (couponComponent.getCouponDto() != null) {
+                couponService.activeCoupon(couponComponent.getCouponDto().getId());
+            }
+        });
         formLayout.add(rateField);
         formLayout.add(changeRate);
 
