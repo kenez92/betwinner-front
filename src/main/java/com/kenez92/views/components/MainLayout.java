@@ -1,5 +1,6 @@
 package com.kenez92.views.components;
 
+import com.kenez92.common.enums.MatchType;
 import com.kenez92.config.Consts;
 import com.kenez92.domain.coupon.CouponDto;
 import com.kenez92.domain.coupon.CouponTypeDto;
@@ -126,6 +127,12 @@ public class MainLayout extends HorizontalLayout {
             couponContent.addColumn(e -> e.getMatchType().getType().equals("1") ? e.getMatch().getMatchStats().getHomeTeamCourse()
                     : (e.getMatchType().getType().equals("2") ? e.getMatch().getMatchStats().getAwayTeamCourse()
                     : e.getMatch().getMatchStats().getDrawCourse()));
+            couponContent.addComponentColumn(e -> new Button("x", event -> {
+                couponService.removeType(couponComponent.getCouponDto().getId(), e.getId());
+                refreshCoupon();
+            })).setAutoWidth(true).setHeader("Remove");
+
+
             rateResult = couponComponent.getCouponDto().getRate() != null ? String.valueOf(couponComponent
                     .getCouponDto().getRate()) : "0.00";
             courseResult = couponComponent.getCouponDto().getCourse() != null ? String.valueOf(couponComponent

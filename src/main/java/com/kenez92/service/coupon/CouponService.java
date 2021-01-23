@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -107,15 +108,40 @@ public class CouponService {
     }
 
     public void activeCoupon(Long couponId) {
+        HttpEntity<Void> response;
         if (couponId != null) {
             try {
                 HttpHeaders headers = createHeaders(loggedUserComponent.getToken());
                 HttpEntity<Void> request = new HttpEntity<>(headers);
-                HttpEntity<Void> response = restTemplate.exchange(rootUrl + "v1/coupons/" + couponId,
+                response = restTemplate.exchange(rootUrl + "v1/coupons/" + couponId,
                         HttpMethod.POST, request, Void.class);
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (HttpClientErrorException ex) {
+                if (ex.getRawStatusCode() == 400) {
+                    if (ex.getMessage().contains("This match already started! ") || ex.getMessage().contains("Your coupon is empty")) {
+                        Notification.show(ex.getResponseBodyAsString());
+                    } else {
+                        Notification.show("Something went wrong. Contant with the administrator!");
+                    }
+                }
             }
+        }
+    }
+
+    public void removeType(Long couponId, Long couponTypeId) {
+        HttpEntity<Boolean> response = null;
+        if (couponId != null && couponTypeId != null) {
+            try {
+                HttpHeaders headers = createHeaders(loggedUserComponent.getToken());
+                HttpEntity<Void> request = new HttpEntity<>(headers);
+                response = restTemplate.exchange(rootUrl + "v1/coupons/" + couponId + "/" + couponTypeId,
+                        HttpMethod.DELETE, request, Boolean.class);
+            } catch (HttpClientErrorException ex) {
+                log.error("Exception : {}", ex.getMessage());
+                Notification.show("Something went wrong. Contant with the administrator!");
+            }
+        }
+        if(response == null || response.getBody() == Boolean.FALSE) {
+            Notification.show("Something went wrong. Contant with the administrator!");
         }
     }
 
