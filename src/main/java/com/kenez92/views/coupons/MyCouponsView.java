@@ -32,11 +32,11 @@ public class MyCouponsView extends MainLayout {
     private void createContent() {
         List<CouponDto> couponDtoList = getCouponService().getUserCoupons();
 
-        List<CouponDto> waitingCouponDtoList = getCouponsByStatus(CouponStatus.WAITING, couponDtoList);
+        List<CouponDto> activeCouponDtoList = getCouponsByStatus(CouponStatus.ACTIVE, couponDtoList);
         List<CouponDto> winCouponDtoList = getCouponsByStatus(CouponStatus.WIN, couponDtoList);
         List<CouponDto> lostCouponDtoList = getCouponsByStatus(CouponStatus.LOST, couponDtoList);
 
-        Tab waitingTab = new Tab(CouponStatus.WAITING.name());
+        Tab waitingTab = new Tab(CouponStatus.ACTIVE.name());
         Div waitingDiv = new Div();
 
         Tab winTab = new Tab(CouponStatus.WIN.name());
@@ -47,7 +47,7 @@ public class MyCouponsView extends MainLayout {
         Div lostDiv = new Div();
         lostDiv.setVisible(false);
 
-        waitingDiv.add(createGrid(waitingCouponDtoList));
+        waitingDiv.add(createGrid(activeCouponDtoList));
         winDiv.add(createGrid(winCouponDtoList));
         lostDiv.add(createGrid(lostCouponDtoList));
 

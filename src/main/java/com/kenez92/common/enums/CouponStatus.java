@@ -1,7 +1,7 @@
 package com.kenez92.common.enums;
 
 public enum CouponStatus {
-    OPEN("OPEN"),
+    ACTIVE("ACTIVE"),
     LOST("LOST"),
     WIN("WIN"),
     WAITING("WAITING");
