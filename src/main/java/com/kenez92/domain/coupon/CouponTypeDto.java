@@ -1,6 +1,7 @@
 package com.kenez92.domain.coupon;
 
-import com.kenez92.common.enums.CouponStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kenez92.common.enums.Status;
 import com.kenez92.common.enums.MatchType;
 import com.kenez92.domain.match.MatchDto;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,8 @@ public class CouponTypeDto {
     private Long id;
     private MatchType matchType;
     private MatchDto match;
-    private CouponStatus status;
+
+    @JsonProperty("couponStatus")
+    private Status status;
     private CouponDto coupon;
 }

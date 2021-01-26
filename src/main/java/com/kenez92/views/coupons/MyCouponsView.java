@@ -1,6 +1,6 @@
 package com.kenez92.views.coupons;
 
-import com.kenez92.common.enums.CouponStatus;
+import com.kenez92.common.enums.Status;
 import com.kenez92.config.Consts;
 import com.kenez92.domain.coupon.CouponDto;
 import com.kenez92.service.coupon.CouponService;
@@ -32,18 +32,18 @@ public class MyCouponsView extends MainLayout {
     private void createContent() {
         List<CouponDto> couponDtoList = getCouponService().getUserCoupons();
 
-        List<CouponDto> activeCouponDtoList = getCouponsByStatus(CouponStatus.ACTIVE, couponDtoList);
-        List<CouponDto> winCouponDtoList = getCouponsByStatus(CouponStatus.WIN, couponDtoList);
-        List<CouponDto> lostCouponDtoList = getCouponsByStatus(CouponStatus.LOST, couponDtoList);
+        List<CouponDto> activeCouponDtoList = getCouponsByStatus(Status.ACTIVE, couponDtoList);
+        List<CouponDto> winCouponDtoList = getCouponsByStatus(Status.WIN, couponDtoList);
+        List<CouponDto> lostCouponDtoList = getCouponsByStatus(Status.LOST, couponDtoList);
 
-        Tab waitingTab = new Tab(CouponStatus.ACTIVE.name());
+        Tab waitingTab = new Tab(Status.ACTIVE.name());
         Div waitingDiv = new Div();
 
-        Tab winTab = new Tab(CouponStatus.WIN.name());
+        Tab winTab = new Tab(Status.WIN.name());
         Div winDiv = new Div();
         winDiv.setVisible(false);
 
-        Tab lostTab = new Tab(CouponStatus.LOST.name());
+        Tab lostTab = new Tab(Status.LOST.name());
         Div lostDiv = new Div();
         lostDiv.setVisible(false);
 
@@ -70,10 +70,10 @@ public class MyCouponsView extends MainLayout {
         this.getContent().add(tabs, pages);
     }
 
-    private List<CouponDto> getCouponsByStatus(CouponStatus couponStatus, List<CouponDto> couponDtoList) {
+    private List<CouponDto> getCouponsByStatus(Status status, List<CouponDto> couponDtoList) {
         List<CouponDto> resultList = new ArrayList<>();
         for (CouponDto couponDto : couponDtoList) {
-            if (couponDto.getCouponStatus().equals(couponStatus)) {
+            if (couponDto.getStatus().equals(status)) {
                 resultList.add(couponDto);
             }
         }
@@ -83,11 +83,12 @@ public class MyCouponsView extends MainLayout {
     private Grid createGrid(List<CouponDto> couponDtoList) {
         Grid<CouponDto> grid = new Grid<>();
         grid.setItems(couponDtoList);
-        grid.addComponentColumn(couponDto -> new Anchor("", couponDto.getId().toString())).setHeader("ID");
+        grid.addComponentColumn(couponDto -> new Anchor("coupons/myCoupon/" + couponDto.getId(),
+                couponDto.getId().toString())).setHeader("ID");
         grid.addColumn(CouponDto::getCourse).setHeader("Course");
         grid.addColumn(CouponDto::getRate).setHeader("Rate");
         grid.addColumn(CouponDto::getResult).setHeader("Result");
-        grid.addColumn(CouponDto::getCouponStatus).setHeader("Status");
+        grid.addColumn(CouponDto::getStatus).setHeader("Status");
         return grid;
     }
 }

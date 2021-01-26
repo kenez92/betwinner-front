@@ -20,9 +20,11 @@ public class MatchDto {
     private MatchStatsDto matchStats;
 
     public String getHourOfDate() {
-        LocalDateTime localDateTime = Instant.ofEpochMilli(date.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-        return localDateTime.getHour() + ":" + localDateTime.getMinute();
+        if(date != null) {
+            LocalDateTime localDateTime = Instant.ofEpochMilli(date.getTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            return localDateTime.getHour() + ":" + localDateTime.getMinute();
+        } else return "";
     }
 }
